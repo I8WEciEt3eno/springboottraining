@@ -1,0 +1,36 @@
+server:
+  port: 8081
+  servlet:
+    contextPath: /springboottraining
+# note : server.port の値を省略すると暗黙で8080になる
+# 80 (本番用)
+# 8080 (開発用)
+# 8081 (開発用2)何らかの理由でサーバに複数並べる時など
+
+logging:
+  level:
+    org:
+      springframework:
+      security: DEBUG
+
+spring:
+  application:
+    name: springboottraining
+  config:
+    import: 'classpath:META-INF/build-info.properties'
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboottraining
+    username: root
+    password: 83032s
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 100 # コネクションプールの最大サイズ
+      connection-timeout: 30000000000000000 # コネクションタイムアウト（ミリ秒）
+      idle-timeout: 6000000000000 # アイドル状態のコネクションの最大存続時間（ミリ秒）
+      max-lifetime: 1800000000000 # コネクションの最大存続時間（ミリ秒）
+  sql:
+    init:
+      mode: always # note : 起動時にdata.sqlを実行する. 開発中の初期化に使う
+  messages:
+    basename: messages
+    cache-duration: -1

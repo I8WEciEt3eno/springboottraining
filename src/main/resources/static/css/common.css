@@ -1,0 +1,75 @@
+header {
+	padding: 10px;
+	margin-bottom: 10px;
+	/* border: 1px solid #333333;
+	background-color: lightpink */
+}
+
+footer {
+	padding: 10px;
+	margin-bottom: 10px;
+	/* border: 1px dotted #333333;
+	background-color: palegreen */
+}
+
+.loginInfoArea {
+	border: 2px solid black;
+	border-radius: 5px;
+	padding: 2px
+}
+
+.iconContainer {
+	height: 90px;
+	width: 90px;
+	margin: 9px;
+}
+
+a.iconContainer {
+	display: inline-block;
+}
+
+span.iconContainer {
+	
+}
+
+button.iconContainer {
+	padding: 0px;
+    border-width: 0px;
+}
+
+img.activeIcon {
+	height: 90px;
+	width: 90px;
+}
+
+img.inactiveIcon {
+	height: 90px;
+	width: 90px;
+	opacity: 0.7
+}
+
+.messageBoxError {
+    padding: 0.5em 1em;
+    margin: 8px 16px;
+    color: #232323;
+    background: #ffebe9;
+    border-left: solid 10px #ff7d6e;
+}
+
+.messageBoxError li {
+    margin: 0;
+    padding: 0;
+}
+
+.messageBoxInfo {
+    padding: 0.5em 1em;
+    margin: 8px 16px;
+    color: #232323;
+    background: #e4fcff;
+    border-left: solid 10px #1dc1d6;
+}
+
+.messageBoxInfo li {
+    margin: 0;
+    padding: 0;
+}

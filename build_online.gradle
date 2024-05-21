@@ -1,0 +1,114 @@
+plugins {
+	id 'java'
+//	id 'war' // note:WARパッケージするならこれを追加
+	id 'org.springframework.boot' version '3.2.4'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'jp.shoheisawachika'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	implementation {
+		canBeResolved = true
+	}
+	compileOnly {
+		canBeResolved = true
+		extendsFrom annotationProcessor
+	}
+	developmentOnly {
+		canBeResolved = true
+	}
+	runtimeOnly {
+		canBeResolved = true
+	}
+	annotationProcessor {
+		canBeResolved = true
+	}
+	testImplementation {
+		canBeResolved = true
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat' // note:WARパッケージするならprovidedRuntime/JARならruntimeOnly
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+task copyLibs {
+	doLast {
+    // dependenciesで利用している設定を定義する
+		def targetDependencies = [
+				"implementation",
+		    	"compileOnly",
+	            "developmentOnly",
+	            "runtimeOnly",
+	            "annotationProcessor",
+	            "testImplementation",
+		]
+		targetDependencies.each({
+			def dir = new File("${projectDir}/lib/" + it)
+			if (dir.exists()) {
+				dir.delete()
+			}
+			def conf = configurations.getByName(it)
+//			conf.canBeResolved = true
+			copy {
+				from conf
+				into dir
+			}
+		})
+	}
+}
+
+//task copyLibs {
+//    doLast {
+//        // コピー先のディレクトリを指定
+//        def libDir = new File("${projectDir}/lib")
+//        if (!libDir.exists()) {
+//            libDir.mkdirs()
+//        }
+//
+//        // コピーする依存関係のスコープを指定
+//        def configurationsToCopy = [
+//            configurations.compileClasspath,
+//            configurations.runtimeClasspath,
+//            configurations.testCompileClasspath,
+//            configurations.testRuntimeClasspath
+//        ]
+//
+//        // 指定したスコープの依存関係をコピー
+//        configurationsToCopy.each { config ->
+//            config.resolve().each { File file ->
+//                copy {
+//                    from file
+//                    into libDir
+//                }
+//            }
+//        }
+//    }
+//}

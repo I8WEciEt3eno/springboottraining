@@ -1,0 +1,8 @@
+# オフラインビルド
+# 
+# (オンライン環境で)
+# build_online.gradleをbuild.gradleにリネームしてcopyLibsを実行
+# → libにライブラリファイルが入る
+# 
+# (オフライン環境で)
+# 上記のライブラリがある状態でbuild → bootrunとかbuild → bootbuildinfo

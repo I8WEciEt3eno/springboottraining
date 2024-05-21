@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- (1)共通にしたいheadをfragment化する -->
+<head th:fragment="head(title)">
+	<!-- <head th:fragment="meta_header(title,links,scripts)">	-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- (2)共通で読み込むCSS/JS -->
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <script	type="text/javascript" th:src="@{/js/common.js}"></script>
+    <!-- (3)タイトルのフォーマット -->
+    <title th:text="${title}+' | springboottraining'"></title>
+
+    <!-- (4)各View固有で読み込むもの
+    <th:block th:replace="${links} ?: _" />
+    <th:block th:replace="${scripts} ?: _" />
+	-->
+</head>
+	<body>
+    	<header th:fragment="header">
+			<p style="color: white; font-size: smaller">↓↓↓ this is header fragment. ↓↓↓</p>
+			<div class="loginInfoArea">
+				<p th:if="${username} == null" >[Not log in]</p>
+				<p th:unless="${username} == null" > [log in] <span th:text="${username}">???</span>.<br>
+					<span th:if="${roles} != null"  > roles : </span>
+					<span th:each="r : ${roles}">
+						<span th:text="${r}"></span>
+					</span>
+				</p>
+			</div>
+    	    <a th:href="@{'/home'}"	class="iconContainer">
+				<img th:src="@{/images/home_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="home" class="activeIcon" />
+			</a>
+			<span th:if="${username} == null" class="iconContainer">
+				<img th:src="@{/images/human_gray.jpg}" alt="home" class="inactiveIcon"/>
+			</span>
+			<a th:unless="${username} == null" th:href="@{'/myprofile'}" class="iconContainer">
+				<img th:src="@{/images/human_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="myprofile" class="activeIcon"/>
+			</a>
+			<a th:href="@{'/home'}"	class="iconContainer">
+				<img th:src="@{/images/security_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="home" class="activeIcon" />
+			</a>
+			<span th:if="${username} == null" class="iconContainer">
+				<img th:src="@{/images/logout_gray.jpg}" alt="home" class="inactiveIcon"/>
+			</span>
+			
+			<!--
+			<button th:unless="${username} == null" form="logout_form" class="iconContainer">
+				<img th:src="@{/images/logout_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="home" class="activeIcon" />
+			</button>
+			<form id="logout_form" th:action="@{/logout}" method="post" style="visibility: hidden;">
+				<input type="submit"/>
+			</form>
+			-->
+			<a th:unless="${username} == null" th:href="@{'/logout'}" class="iconContainer">
+				<img th:src="@{/images/logout_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="home" class="activeIcon" />
+			</a>
+
+			<p style="color: white; font-size: smaller">↑↑↑ this is header fragment. ↑↑↑</p>
+			<div style="border: 4px solid black;"></div>
+    	</header>
+		
+		<div th:fragment="messageArea">
+			<ul th:if="${errorMessageList} != null" class="messageBoxError">
+				<li th:each="m : ${errorMessageList}">
+					<span th:text="${m}"></span>
+				</li>
+			</ul>
+			<ul th:if="${infoMessageList} != null" class="messageBoxInfo">
+				<li th:each="m : ${infoMessageList}">
+					<span th:text="${m}"></span>
+				</li>
+			</ul>
+		</div>
+	
+		<footer th:fragment="footer">
+			<div style="border: 4px solid black;"></div>
+			<p style="color: white; font-size: smaller"> ↓↓↓ this is footer fragment. ↓↓↓</p>
+			<p style="text-align: center;"> application version is <span th:text="${buildInfoProperty.version}"></span><br>
+			Copyright © 2024 Shohei Sawachika</p>
+			<p style="color: white; font-size: smaller"> ↑↑↑ this is footer fragment. ↑↑↑</p>
+		</footer>
+	</body>
+</html>

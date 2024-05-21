@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: serverdev
+# こう書くと,コマンドライン引数が指定されなかった場合に
+# 暗黙的に下記のように指定されたことになる
+# java -jar xxx.jar --spring.profiles.active=serverdev

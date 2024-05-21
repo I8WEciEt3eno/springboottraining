@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<!-- ■□■□ ページタイトルを引数にhead()を呼び出す ■□■□ -->
+    <head th:replace="common :: head('error')"></head>
+    <body>
+	    <div th:replace="common :: header"></div>
+	    <div th:replace="common :: messageArea"></div>
+	    <!-- ■□■□ ここから個別ページのコンテンツ ■□■□ -->
+		    <label th:text="#{webpage.error}"></label>
+  <div th:text="'timestamp: ' + ${timestamp}"></div>
+  <div th:text="'status: ' + ${status}"></div>
+  <div th:text="'error: ' + ${error}"></div>
+  <div th:text="'exception: ' + ${exception}"></div>
+  <div th:text="'message: ' + ${message}"></div>
+  <div th:text="'errors: ' + ${errors}"></div>
+  <div th:text="'trace: ' + ${trace}"></div>
+  <div th:text="'path: ' + ${path}"></div>
+        <!-- ■□■□ ここまで個別ページのコンテンツ ■□■□ -->
+        <div th:replace="common :: footer"></div>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<!-- ■□■□ ページタイトルを引数にhead()を呼び出す ■□■□ -->
+    <head th:replace="common :: head('myprofile')"></head>
+    <body>
+		<div th:replace="common :: header"></div>
+		<div th:replace="common :: messageArea"></div>
+		<!-- ■□■□ ここから個別ページのコンテンツ ■□■□ -->
+		<form id="_update" th:action="@{/myprofile/update}" method="post"></form>
+		<form id="_changePassword" th:action="@{/myprofile/changePassword}" method="post"></form>
+		<form th:action="@{/myprofile/test}" method="post">
+		    <div>
+				<label th:text="#{webpage.id}"></label> : 
+				<input type="text" name="id" readonly th:value="${myprofileForm.id}"/>
+			</div>
+			<div>
+				<label th:text="#{webpage.userName}"></label> : 
+				<input type="text" name="name" readonly th:value="${myprofileForm.name}"/>
+			</div>
+			<div>
+				<label th:text="#{webpage.description}"></label> : 
+				<input type="text" name="description" th:value="${myprofileForm.description}"/>
+			</div>
+			<div>
+				<input type="submit" th:value="#{webpage.update}" name="update"	th:formaction="@{/myprofile/update}" />
+			</div>
+			<div style="border: 1px solid black; margin: 10px;"></div>
+			<div>
+				<label th:text="#{webpage.cleartextPassword}"> </label> : 
+				<input type="text" name="cleartextPassword" th:value="${myprofileForm.cleartextPassword}"/>
+			</div>
+			<div>
+				<input type="submit" th:value="#{webpage.changePassword}" name="changePassword"	th:formaction="@{/myprofile/changePassword}"/>
+			</div>
+		</form>
+		<!-- ■□■□ ここまで個別ページのコンテンツ ■□■□ -->
+		<div th:replace="common :: footer"></div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<!-- ■□■□ ページタイトルを引数にhead()を呼び出す ■□■□ -->
+    <head th:replace="common :: head('hello')"></head>
+    <body>
+		<div th:replace="common :: header"></div>
+		<div th:replace="common :: messageArea"></div>
+		<!-- ■□■□ ここから個別ページのコンテンツ ■□■□ -->
+		<h1>Hello, <span th:text="${username}">USER</span>!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+		<!-- ■□■□ ここまで個別ページのコンテンツ ■□■□ -->
+		<div th:replace="common :: footer"></div>
+    </body>
+</html>
