@@ -32,5 +32,5 @@ spring:
     init:
       mode: always # note : 起動時にdata.sqlを実行する. 開発中の初期化に使う
   messages:
-    basename: messages
+    basename: messages, validationMessages
     cache-duration: -1

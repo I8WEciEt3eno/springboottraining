@@ -30,5 +30,5 @@ spring:
     console:
       enabled: true
   messages:
-    basename: messages
+    basename: messages, validationMessages
     cache-duration: -1

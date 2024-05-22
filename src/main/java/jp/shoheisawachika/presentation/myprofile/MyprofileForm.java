@@ -1,6 +1,7 @@
 package jp.shoheisawachika.presentation.myprofile;
 
-import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +29,6 @@ public class MyprofileForm {
 
 	@Getter
 	@Setter
-	@Size(max = 10, message = "{0}は0～10桁を入力してください")
+	@Length(min=0, max=10)
     private String description;
 }

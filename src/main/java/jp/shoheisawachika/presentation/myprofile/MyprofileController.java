@@ -40,11 +40,10 @@ public class MyprofileController extends CommonController {
 	
     }
 
-    //TODO 0429 Validationがきかない. html側でth:objectとth:fieldを使用するように修正すればいい？
     @PostMapping("/myprofile/update")
     public String update(@ModelAttribute @Validated MyprofileForm form, BindingResult bindingResult, Model model) {
-    	if (!bindingResult.hasErrors()){
-        	MessageUtil.addMessage2Model(model, SystemMessage.ERR00001, null);
+    	if (bindingResult.hasErrors()){
+        	MessageUtil.addMessage2Model(model, SystemMessage.ERR00002, null);
         	return "myprofile";
         }
     	MyprofileDto dto = new MyprofileDto(form);

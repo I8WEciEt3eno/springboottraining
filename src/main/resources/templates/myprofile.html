@@ -11,17 +11,18 @@
 		<form id="_update" th:action="@{/myprofile/update}" method="post"></form>
 		<form id="_changePassword" th:action="@{/myprofile/changePassword}" method="post"></form>
 		<form th:action="@{/myprofile/test}" method="post">
-		    <div>
+		    <div th:object="${myprofileForm}">
 				<label th:text="#{webpage.id}"></label> : 
-				<input type="text" name="id" readonly th:value="${myprofileForm.id}"/>
+				<input type="text" name="id" readonly th:field="${myprofileForm.id}"/>
 			</div>
 			<div>
 				<label th:text="#{webpage.userName}"></label> : 
-				<input type="text" name="name" readonly th:value="${myprofileForm.name}"/>
+				<input type="text" name="name" readonly th:field="${myprofileForm.name}"/>
 			</div>
 			<div>
-				<label th:text="#{webpage.description}"></label> : 
-				<input type="text" name="description" th:value="${myprofileForm.description}"/>
+				<label th:text="#{description}"></label> : 
+				<input type="text" name="description" th:field="${myprofileForm.description}"/>
+				<span th:errors="${myprofileForm.description}" class="error"></span>
 			</div>
 			<div>
 				<input type="submit" th:value="#{webpage.update}" name="update"	th:formaction="@{/myprofile/update}" />
@@ -29,7 +30,7 @@
 			<div style="border: 1px solid black; margin: 10px;"></div>
 			<div>
 				<label th:text="#{webpage.cleartextPassword}"> </label> : 
-				<input type="text" name="cleartextPassword" th:value="${myprofileForm.cleartextPassword}"/>
+				<input type="text" name="cleartextPassword" th:field="${myprofileForm.cleartextPassword}"/>
 			</div>
 			<div>
 				<input type="submit" th:value="#{webpage.changePassword}" name="changePassword"	th:formaction="@{/myprofile/changePassword}"/>
