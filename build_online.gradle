@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
 //	id 'war' // note:WARパッケージするならこれを追加
-	id 'org.springframework.boot' version '3.2.4'
+	id 'org.springframework.boot' version '3.2.5'
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -32,6 +32,9 @@ configurations {
 	testImplementation {
 		canBeResolved = true
 	}
+	gradlePlugin {
+		canBeResolved = true
+	}
 }
 
 repositories {
@@ -49,10 +52,12 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat' // note:WARパッケージするならprovidedRuntime/JARならruntimeOnly
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	gradlePlugin 'org.springframework.boot:spring-boot-gradle-plugin:3.2.5'
 }
 
 tasks.named('test') {
@@ -69,6 +74,7 @@ task copyLibs {
 	            "runtimeOnly",
 	            "annotationProcessor",
 	            "testImplementation",
+	            "gradlePlugin",
 		]
 		targetDependencies.each({
 			def dir = new File("${projectDir}/lib/" + it)
