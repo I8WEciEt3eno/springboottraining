@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- デフォルトで継承したい設定の読み込み -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <property name="logFileName" value="sbt"/>
+
+    <springProfile name="localdev">
+        <property name="logFilePath" value=".\"/>
+        <property name="normalLogLevel" value="DEBUG"/>
+    </springProfile>
+
+    <springProfile name="serverdev">
+        <property name="logFilePath" value="C:\Users\81805\Desktop\"/>
+        <property name="normalLogLevel" value="DEBUG"/>
+    </springProfile>
+
+    <!--
+    <springProfile name="production">
+        <property name="logFilePath" value="C:\Users\81805\Desktop"/>
+    </springProfile>
+     -->
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern><![CDATA[[%d{yyyy-MM-dd HH:mm:ss}] %-5level %-48logger{48} %thread |\t%msg%n]]></pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--ファイル名 -->
+        <file>${logFilePath}${logFileName}-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logFilePath}${logFileName}-error-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>31</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern><![CDATA[[%d{yyyy-MM-dd HH:mm:ss}] %-5level %-48logger{48} %thread |\t%msg%n]]></pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="APPLICATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--ファイル名 -->
+        <file>${logFilePath}${logFileName}.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${normalLogLevel}</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logFilePath}${logFileName}-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>31</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern><![CDATA[[%d{yyyy-MM-dd HH:mm:ss}] %-5level %-48logger{48} %thread |\t%msg%n]]></pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="HTTP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--ファイル名 -->
+        <file>${logFilePath}${logFileName}-http.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logFilePath}${logFileName}-%d{yyyy-MM-dd}-http.log.zip</fileNamePattern>
+            <maxHistory>31</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern><![CDATA[[%d{yyyy-MM-dd HH:mm:ss}] %-5level %-48logger{48} %thread |\t%msg%n]]></pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="DB_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--ファイル名 -->
+        <file>${logFilePath}${logFileName}-db.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logFilePath}${logFileName}-%d{yyyy-MM-dd}-db.log.zip</fileNamePattern>
+            <maxHistory>31</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern><![CDATA[[%d{yyyy-MM-dd HH:mm:ss}] %-5level %-48logger{48} %thread |\t%msg%n]]></pattern>
+        </encoder>
+    </appender>
+
+    <logger name="jp.shoheisawachika" level="TRACE" >
+        <appender-ref ref="ERROR_LOG"/>
+        <appender-ref ref="APPLICATION_LOG"/>
+    </logger>
+
+    <logger name="jp.shoheisawachika.LoggingInterceptor" level="INFO" >
+        <appender-ref ref="HTTP_LOG"/>
+    </logger>
+
+    <logger name="org.springframework.jdbc.core" level="DEBUG" >
+        <appender-ref ref="DB_LOG"/>
+    </logger>
+
+    <logger name="org.springframework.jdbc.datasource" level="DEBUG" >
+        <appender-ref ref="DB_LOG"/>
+    </logger>
+    
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<!-- ■□■□ ページタイトルを引数にhead()を呼び出す ■□■□ -->
+	<head th:replace="common :: head('login')"></head>
+    <body>
+		<div th:replace="common :: header"></div>
+		<div th:replace="common :: messageArea"></div>
+		<!-- ■□■□ ここから個別ページのコンテンツ ■□■□ -->
+        <div th:if="${param.errort}" class="messageBoxError">
+            <p>Invalid username and password.</p>
+        </div>
+        <div th:if="${param.logout}" class="messageBoxError">
+			<p>You have been logged out.</p>
+        </div>
+        <form th:action="@{/login}" method="post">
+            <div>
+				<label th:text="#{webpage.userId}"> User Name </label> : 
+				<input type="text" name="username"/>
+			</div>
+            <div>
+				<label th:text="#{webpage.password}"> Password </label> : 
+				<input type="password" name="password"/>
+			</div>
+            <div>
+				<input type="submit" th:value="#{webpage.signIn}"/>
+			</div>
+        </form>
+		<!-- ■□■□ ここまで個別ページのコンテンツ ■□■□ -->
+		<div th:replace="common :: footer"></div>
+    </body>
+</html>
