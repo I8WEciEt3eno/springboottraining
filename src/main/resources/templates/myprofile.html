@@ -14,6 +14,7 @@
 		    <div th:object="${myprofileForm}">
 				<label th:text="#{webpage.id}"></label> : 
 				<input type="text" name="id" readonly th:field="${myprofileForm.id}"/>
+				<input type="text" name="updateCount" style="display:none" th:field="${myprofileForm.updateCount}"/>
 			</div>
 			<div>
 				<label th:text="#{webpage.userName}"></label> : 

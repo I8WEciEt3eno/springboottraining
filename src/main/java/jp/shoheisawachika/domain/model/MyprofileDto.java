@@ -30,12 +30,17 @@ public class MyprofileDto {
 	@Getter
 	@Setter
     private String description;
+
+	@Getter
+	@Setter
+    private int updateCount;
 	
 	public MyprofileDto(MyprofileForm myprofileForm) {
 		this.id = myprofileForm.getId();
 		this.name = myprofileForm.getName();
 		this.cleartextPassword = myprofileForm.getCleartextPassword();
 		this.description = myprofileForm.getDescription();
+		this.updateCount = myprofileForm.getUpdateCount();
 	}
 	
 	public MyprofileDto(SbtUserdata sbtUserdata) {
@@ -43,4 +48,5 @@ public class MyprofileDto {
 		this.name = sbtUserdata.getName();
 		this.cleartextPassword = "";
 		this.description = sbtUserdata.getDescription();
+		this.updateCount = sbtUserdata.getUpdateCount();
 	}}

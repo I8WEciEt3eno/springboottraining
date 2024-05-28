@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 
 import jp.shoheisawachika.infrastructure.entity.SbtUserdata;
 
+@Deprecated
 public class SbtUser extends User {
 
 	public SbtUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {

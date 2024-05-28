@@ -4,7 +4,8 @@ CREATE TABLE userdata
 (id_user     INT  NOT NULL PRIMARY KEY AUTO_INCREMENT,
 name        TEXT NOT NULL,
 password    TEXT NOT NULL,
-description TEXT);
+description TEXT,
+update_count INT DEFAULT 0);
 
 INSERT INTO userdata (name, password, description) VALUES ('01haru',  '$2a$10$sshMrue/Q/JniEX7C575f.WiimO.T0wgHjbKClC6HSuVRcw6g3j5G', 'はる');
 INSERT INTO userdata (name, password, description) VALUES ('02natsu', '$2a$10$FqOsfjGVZHtfj7CrLdaaV.wf1VofgacH8.yGcU20obZn0IVPXP8ni', 'なつ');

@@ -34,6 +34,7 @@ public class MyprofileController extends CommonController {
         		.name(dto.getName())
         		.cleartextPassword("")
         		.description(dto.getDescription())
+        		.updateCount(dto.getUpdateCount())
         		.build();
     	model.addAttribute("myprofileForm", form);
     	return "myprofile";
@@ -49,6 +50,17 @@ public class MyprofileController extends CommonController {
     	MyprofileDto dto = new MyprofileDto(form);
     	myprofileService.update(dto);
     	MessageUtil.addMessage2Model(model, SystemMessage.INF00003, null);
+
+    	MyprofileDto dtoR = myprofileService.initializeForm();
+    	MyprofileForm formR = MyprofileForm.builder()
+        		.id(dtoR.getId())
+        		.name(dtoR.getName())
+        		.cleartextPassword("")
+        		.description(dtoR.getDescription())
+        		.updateCount(dtoR.getUpdateCount())
+        		.build();
+    	model.addAttribute("myprofileForm", formR);
+
     	return "myprofile";
     }
 
@@ -57,6 +69,16 @@ public class MyprofileController extends CommonController {
     	MyprofileDto dto = new MyprofileDto(form);
     	myprofileService.changePassword(dto);
     	MessageUtil.addMessage2Model(model, SystemMessage.INF00003, null);
+
+    	MyprofileDto dtoR = myprofileService.initializeForm();
+    	MyprofileForm formR = MyprofileForm.builder()
+        		.id(dtoR.getId())
+        		.name(dtoR.getName())
+        		.cleartextPassword("")
+        		.description(dtoR.getDescription())
+        		.updateCount(dtoR.getUpdateCount())
+        		.build();
+    	model.addAttribute("myprofileForm", formR);
     	return "myprofile";	
     }
 }

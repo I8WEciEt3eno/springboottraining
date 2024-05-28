@@ -20,7 +20,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 全てのパスに対してインターセプターを適用
-        registry.addInterceptor(userInterceptor).addPathPatterns("/**");
+//        registry.addInterceptor(userInterceptor).addPathPatterns("/**");
         registry.addInterceptor(loggingInterceptor).addPathPatterns("/**");
     }
 	

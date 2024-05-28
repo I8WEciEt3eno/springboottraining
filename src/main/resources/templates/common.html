@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <!-- (1)共通にしたいheadをfragment化する -->
 <head th:fragment="head(title)">
 	<!-- <head th:fragment="meta_header(title,links,scripts)">	-->
@@ -18,27 +19,27 @@
     	<header th:fragment="header">
 			<p style="color: white; font-size: smaller">↓↓↓ this is header fragment. ↓↓↓</p>
 			<div class="loginInfoArea">
-				<p th:if="${username} == null" >[Not log in]</p>
-				<p th:unless="${username} == null" > [log in] <span th:text="${username}">???</span>.<br>
-					<span th:if="${roles} != null"  > roles : </span>
-					<span th:each="r : ${roles}">
-						<span th:text="${r}"></span>
-					</span>
+				<p sec:authorize="${isAnonymous()}" >[Not log in]</p>
+				<p sec:authorize="${isAuthenticated()}" > [log in] <span sec:authentication="principal.username">???</span>.<br>
+					description: <span sec:authentication="principal.description">???</span>
+					<span sec:authorize="hasAuthority('ADMIN')"><br>Authority: ADMIN</span>
+					<span sec:authorize="hasAuthority('MANAGER')"><br>Authority: MANAGER</span>
+					<span sec:authorize="hasAuthority('USER')"><br>Authority: USER</span>
 				</p>
 			</div>
     	    <a th:href="@{'/home'}"	class="iconContainer">
 				<img th:src="@{/images/home_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="home" class="activeIcon" />
 			</a>
-			<span th:if="${username} == null" class="iconContainer">
+			<span sec:authorize="${isAnonymous()}" class="iconContainer">
 				<img th:src="@{/images/human_gray.jpg}" alt="home" class="inactiveIcon"/>
 			</span>
-			<a th:unless="${username} == null" th:href="@{'/myprofile'}" class="iconContainer">
+			<a sec:authorize="${isAuthenticated()}" th:href="@{'/myprofile'}" class="iconContainer">
 				<img th:src="@{/images/human_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="myprofile" class="activeIcon"/>
 			</a>
 			<a th:href="@{'/home'}"	class="iconContainer">
 				<img th:src="@{/images/security_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="home" class="activeIcon" />
 			</a>
-			<span th:if="${username} == null" class="iconContainer">
+			<span sec:authorize="${isAnonymous()}" class="iconContainer">
 				<img th:src="@{/images/logout_gray.jpg}" alt="home" class="inactiveIcon"/>
 			</span>
 			
@@ -50,7 +51,7 @@
 				<input type="submit"/>
 			</form>
 			-->
-			<a th:unless="${username} == null" th:href="@{'/logout'}" class="iconContainer">
+			<a sec:authorize="${isAuthenticated()}" th:href="@{'/logout'}" class="iconContainer">
 				<img th:src="@{/images/logout_blue.jpg}" onmouseover="iconMouseover(this)" th:onmouseout="iconMouseout(this)" alt="home" class="activeIcon" />
 			</a>
 

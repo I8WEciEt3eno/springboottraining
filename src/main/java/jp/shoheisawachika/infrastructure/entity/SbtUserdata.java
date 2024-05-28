@@ -33,5 +33,9 @@ public class SbtUserdata {
 
 	@Getter
 	@Setter
+    private int updateCount;
+
+	@Getter
+	@Setter
     private List<SbtRole> roles;
 }

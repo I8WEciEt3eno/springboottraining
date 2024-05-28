@@ -31,4 +31,8 @@ public class MyprofileForm {
 	@Setter
 	@Length(min=0, max=10)
     private String description;
+
+	@Getter
+	@Setter
+    private int updateCount;
 }

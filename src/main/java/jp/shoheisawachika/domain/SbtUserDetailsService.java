@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import jp.shoheisawachika.infrastructure.JdbcSbtUserRepository;
 import jp.shoheisawachika.infrastructure.entity.SbtUserdata;
-import jp.shoheisawachika.security.SbtUser;
+import jp.shoheisawachika.security.SbtUserDetails;
 
 @Component
 public class SbtUserDetailsService implements UserDetailsService {
@@ -22,6 +22,7 @@ public class SbtUserDetailsService implements UserDetailsService {
         if (sbtUserdata == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new SbtUser(sbtUserdata);
+        //return new SbtUser(sbtUserdata);
+        return new SbtUserDetails(sbtUserdata);
     }
 }

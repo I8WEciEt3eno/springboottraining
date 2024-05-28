@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jp.shoheisawachika.domain.SbtUserRepository;
 import jp.shoheisawachika.infrastructure.entity.SbtRole;
@@ -28,6 +29,7 @@ public class JdbcSbtUserRepository implements SbtUserRepository {
                 		rs.getString("name"),
                 		rs.getString("password"),
                 		rs.getString("description"),
+                		rs.getInt("update_count"),
                 		null)
         		);
     }
@@ -42,7 +44,7 @@ public class JdbcSbtUserRepository implements SbtUserRepository {
 
     public SbtUserdata findByUsername(String username) {
 //        final String sql = "SELECT * FROM userdata WHERE name = ?" ;
-        final String sql = "SELECT u.id_user, u.name AS u_name, u.password, u.description, r.id_role, r.no AS r_no, r.name AS r_name " +
+        final String sql = "SELECT u.id_user, u.name AS u_name, u.password, u.description, u.update_count, r.id_role, r.no AS r_no, r.name AS r_name " +
         		" FROM userdata u " +
         		"  LEFT JOIN user_role ur ON u.id_user = ur.id_user " +
         		"  LEFT JOIN role r ON r.no = ur.role_no " +
@@ -57,6 +59,7 @@ public class JdbcSbtUserRepository implements SbtUserRepository {
                      		rs.getString("u_name"),
                      		rs.getString("password"),
                      		rs.getString("description"),
+                     		rs.getInt("update_count"),
                      		null);
         			roles.add(new SbtRole(
     						rs.getString("id_role"),
@@ -85,22 +88,33 @@ public class JdbcSbtUserRepository implements SbtUserRepository {
         		username); // sql内のバインド変数 可変長引数
     }
 
-    public int update(String id_user, String description) {
+    @Transactional
+    public int update(String id_user, String description, int currentUpdateCount) {
         final String sql = "UPDATE userdata " +
-        		"   SET description = ? " +
-        		" WHERE id_user = ? " ;
-        return jdbcTemplate.update(
+        		"   SET description = ?, update_count = update_count + 1 " +
+        		" WHERE id_user = ? AND update_count = ? " ;
+        int resultRows = jdbcTemplate.update(
         		sql,
-        		description, id_user); // sql内のバインド変数 可変長引数
+        		description, id_user, currentUpdateCount); // sql内のバインド変数 可変長引数
+        if (resultRows == 0) {
+            throw new IllegalStateException("Data was modified by another transaction");
+        }
+        return resultRows;
     }
 
-    public int updatePassword(String id_user, String password) {
+    @Transactional
+    public int updatePassword(String id_user, String password, int currentUpdateCount) {
         final String sql = "UPDATE userdata " +
-        		"   SET password = ? " +
-        		" WHERE id_user = ? " ;
-        return jdbcTemplate.update(
+        		"   SET password = ?, update_count = update_count + 1 " +
+        		" WHERE id_user = ? AND update_count = ? " ;
+        int resultRows = jdbcTemplate.update(
         		sql,
-        		password, id_user); // sql内のバインド変数 可変長引数
+        		password, id_user, currentUpdateCount); // sql内のバインド変数 可変長引数
+        if (resultRows == 0) {
+            throw new IllegalStateException("Data was modified by another transaction");
+        }
+        return resultRows;
+
     }
 
 }

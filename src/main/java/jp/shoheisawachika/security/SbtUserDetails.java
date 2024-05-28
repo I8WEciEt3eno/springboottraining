@@ -1,4 +1,4 @@
-package jp.shoheisawachika.domain.model;
+package jp.shoheisawachika.security;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -11,11 +11,11 @@ import jp.shoheisawachika.infrastructure.entity.SbtUserdata;
 import lombok.Data;
 
 @Data
-public class UserDetailsImpl implements UserDetails {
+public class SbtUserDetails implements UserDetails {
 
     private SbtUserdata user;
     
-    public UserDetailsImpl(SbtUserdata user) {
+    public SbtUserDetails(SbtUserdata user) {
     	this.user = user;
     	this.authority = user.getRoles().stream()
     			.map(role -> new SimpleGrantedAuthority(role.getName()))
@@ -37,6 +37,10 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public String getUsername() {
 		return user.getName();
+	}
+
+	public String getDescription() {
+		return user.getDescription();
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class MyprofileService {
     }
 
     public void update(MyprofileDto dto) {
-    	int rows = userRepository.update(dto.getId(), dto.getDescription());
+    	int rows = userRepository.update(dto.getId(), dto.getDescription(), dto.getUpdateCount());
     	if (rows == 0) {
     		
     	}
@@ -43,7 +43,7 @@ public class MyprofileService {
     public void changePassword(MyprofileDto dto) {
     	String passwordEncode = (new SecurityConfig()).passwordEncoder()
     			.encode(dto.getCleartextPassword());
-    	int rows = userRepository.updatePassword(dto.getId(), passwordEncode);
+    	int rows = userRepository.updatePassword(dto.getId(), passwordEncode, dto.getUpdateCount());
     	if (rows == 0) {
     		
     	}
