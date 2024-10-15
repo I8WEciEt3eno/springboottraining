@@ -58,6 +58,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	gradlePlugin 'org.springframework.boot:spring-boot-gradle-plugin:3.2.5'
+	
+	implementation 'com.opencsv:opencsv:5.9'
 }
 
 tasks.named('test') {
